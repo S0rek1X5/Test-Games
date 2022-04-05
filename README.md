@@ -1,2 +1,2 @@
 # Test-Games
- Estare subiendo videojuegos de prueba con objetivo de aprender a programar videojuegos en diferentes lenguajes.
+ Estare subiendo codigo de videojuegos de prueba con el objetivo de aprender a desarrollar videojuegos de verdad a futuro.
