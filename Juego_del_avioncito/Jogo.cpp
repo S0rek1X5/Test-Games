@@ -39,7 +39,7 @@ class NAVE{
 	int vidas;
 public:
 	int X(){ return x;}
-	int Y(){ return y}
+	int Y(){ return y;}
 	void COR() { corazones--;}
 	NAVE(int _x, int _y, int _corazones,int _vidas): x(_x),y(_y),corazones(_corazones),vidas(_vidas){}
 	void pintar();
@@ -105,10 +105,11 @@ public:
 	void pintar();
 	void mover();
 	void choque(struct NAVE &N);
-}
+};
 void AST::choque(struct NAVE &N){
 	if( x >= N.X() && x<< N.X()+5 && y>= N.Y() && y<=N.Y()+2){
 		N.COR();
+		N.borrar();
 		N.pintar();
 		N.pintar_corazones();
 		x = rand()%71+4;
@@ -138,9 +139,9 @@ int main(){
 	bool game_over = false;
 	while(!game_over){
 		
-		ast1.mover(); ast1.choque();
-		ast2.mover(); ast2.choque();
-		ast3.mover(); ast3.choque();
+		ast1.mover(); ast1.choque(N);
+		ast2.mover(); ast2.choque(N);
+		ast3.mover(); ast3.choque(N);
 		
 		N.morir();
 		N.mover();
