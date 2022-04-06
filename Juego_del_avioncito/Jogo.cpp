@@ -42,6 +42,7 @@ class NAVE{
 public:
 	int X(){ return x;}
 	int Y(){ return y;}
+	int VID(){ return vidas;}
 	void COR() { corazones--;}
 	NAVE(int _x, int _y, int _corazones,int _vidas): x(_x),y(_y),corazones(_corazones),vidas(_vidas){}
 	void pintar();
@@ -182,10 +183,11 @@ int main(){
 		ast1.mover(); ast1.choque(N);
 		ast2.mover(); ast2.choque(N);
 		ast3.mover(); ast3.choque(N);
-		
+		if(N.VID()==0) game_over=true;
 		N.morir();
 		N.mover();
 		Sleep(30);
 	}
+	cout<<"Juego terminado, pronto espero que sepas hacer esto sin ayuda y mucho mejor";
 	return 0;
 }
