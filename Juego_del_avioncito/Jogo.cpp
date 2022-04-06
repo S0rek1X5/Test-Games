@@ -2,6 +2,8 @@
 #include <windows.h>
 #include <conio.h>
 #include<stdlib.h>
+#include <list>
+using namespace std;
 void gotoxy(int x, int y){
 	HANDLE hCon; COORD dwPos;
 	hCon = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -104,10 +106,10 @@ public:
 	AST(int _x, int _y): x(_x),y(_y){}
 	void pintar();
 	void mover();
-	void choque(struct NAVE &N);
+	void choque(class NAVE &N);
 };
-void AST::choque(struct NAVE &N){
-	if( x >= N.X() && x<< N.X()+5 && y>= N.Y() && y<=N.Y()+2){
+void AST::choque(class NAVE &N){
+	if( x >= N.X() && x < N.X()+5 && y>= N.Y() && y<=N.Y()+2){
 		N.COR();
 		N.borrar();
 		N.pintar();
@@ -129,6 +131,25 @@ void AST::mover(){
 	pintar();
 }
 
+class BALA{
+	int x,y;
+	
+public:
+	BALA(int _x, int _y): x(_x), y(_y){}
+	int X(){ return x;}
+	int Y(){ return y;}
+	void mover();
+	bool fuera();
+};
+bool BALA::fuera(){
+	if(y==4)return true;
+	return false;
+}
+void BALA::mover(){
+	gotoxy(x,y); printf(" ");
+	y--;
+	gotoxy(x,y); printf("o");
+}
 int main(){
 	OcultarCursor();
 	pintar_limites();
@@ -136,9 +157,28 @@ int main(){
 	N.pintar();
 	N.pintar_corazones();
 	AST ast1(10,4),ast2(4,8),ast3(18,15);
+	
+	list<BALA*> B;
+	list<BALA*>::iterator it;
+	
 	bool game_over = false;
 	while(!game_over){
 		
+		if(kbhit()){
+			char tecla=getch();
+			if(tecla=='v')
+			B.push_back(new BALA(N.X()+2,N.Y()-1));
+		}
+		for(it=B.begin(); it!=B.end();it++){
+			(*it)->mover();
+			if((*it)->fuera()){
+				gotoxy((*it)->X(),(*it)->Y());printf(" ");
+				delete(*it);
+				it = B.erase(it);
+				
+			}
+			
+		}
 		ast1.mover(); ast1.choque(N);
 		ast2.mover(); ast2.choque(N);
 		ast3.mover(); ast3.choque(N);
@@ -149,4 +189,3 @@ int main(){
 	}
 	return 0;
 }
-
